@@ -9,7 +9,8 @@ export XILINX_VIVADO=/
 
 # risc-v toolchain environment
 export RISCV=/home/espuser/riscv
-export PATH=$PATH:/home/espuser/riscv/bin
+export RISCV32IMC=/home/espuser/riscv32imc
+export PATH=$PATH:/home/espuser/riscv/bin:/home/espuser/riscv32imc/bin
 echo "Exported RISC-V toolchain environment"
 
 # leon3 toolchain environment

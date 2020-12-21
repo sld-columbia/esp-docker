@@ -13,7 +13,7 @@ readline-devel.i686 libXp libXp.i686 openmotif ncurses gdbm-devel \
 gdbm-devel.i686 libSM libSM.i686 libXcursor libXcursor.i686 libXft \
 libXft.i686 libXrandr libXrandr.i686 libXScrnSaver libXScrnSaver.i686 \
 libmpc-devel libmpc-devel.i686 nspr nspr.i686 nspr-devel nspr-devel.i686 \
-tk-devel dtc bison flex socat minicom tmux \
+tk tk-devel Xvfb dtc bison flex socat minicom tmux \
 git wget bzip2 which gcc gcc-c++ unzip file patch bc \
 texinfo texinfo-tex help2man emacs vim xorg-x11-apps java
 RUN ln -s /lib64/libtiff.so.5 /lib64/libtiff.so.3 && \
@@ -31,12 +31,12 @@ WORKDIR /home/espuser
 # clone ESP repository and install software toolchains
 RUN git clone https://github.com/sld-columbia/esp.git && cd esp && \
 git submodule update --init --recursive \
-accelerators/stratus_hls/common/syn-templates \
-chisel rtl/src/sld/caches/esp-caches third-party/ariane \
+accelerators/stratus_hls/common/inc \
+accelerators/chisel/hw rtl/caches/esp-caches rtl/cores/ariane/ariane \
 soft/ariane/riscv-pk soft/ariane/riscv-tests \
-third-party/accelerators/dma64/NV_NVDLA/ip \
-third-party/accelerators/dma64/NV_NVDLA/sw && \
-cd /home/espuser/esp/third-party/accelerators/dma64/NV_NVDLA && \
+accelerators/third-party/NV_NVDLA/ip \
+accelerators/third-party/NV_NVDLA/sw && \
+cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && \
 rm -rf ip/verif sw/prebuilt sw/regression
 
 USER root
