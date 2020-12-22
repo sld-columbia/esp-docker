@@ -30,7 +30,7 @@ WORKDIR /home/espuser
 
 # clone ESP repository and install software toolchains
 RUN git clone --recursive https://github.com/sld-columbia/esp.git && \
-cd /home/espuser/esp/acceleratorsthird-party/NV_NVDLA && rm -rf ip/verif sw/prebuilt sw/regression && \
+cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && rm -rf ip/verif sw/prebuilt sw/regression && \
 cd /home/espuser/esp && \
 (echo y; echo /home/espuser/leon; echo 2; echo n; echo n; echo n; echo n) | bash utils/toolchain/build_leon3_toolchain.sh && \
 (echo y; echo /home/espuser/riscv; echo 2; echo n; echo n; echo n) | bash utils/toolchain/build_riscv_toolchain.sh && \
