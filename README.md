@@ -19,5 +19,5 @@ cd centos7/full
 # for small image
 cd centos7/small
 
-docker build -t <docker-image-name>
+docker build -t <docker-image-name> .
 ```
