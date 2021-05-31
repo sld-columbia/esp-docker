@@ -44,23 +44,14 @@ WORKDIR /home/espuser
  
 # clone ESP repository and install software toolchains
 RUN git clone --recursive https://github.com/sld-columbia/esp.git
-##  && \
-## cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && rm -rf ip/verif sw/prebuilt sw/regression
-## RUN cd /home/espuser/esp && rm -rf utils/zynq
-## RUN cd /home/espuser/esp && \
-## #(echo y; echo /home/espuser/leon; echo 2; echo n; echo n; echo n; echo n) | bash utils/toolchain/build_leon3_toolchain.sh && rm -rf /tmp/_leon3_build && \
-## (echo y; echo /home/espuser/riscv; echo 2; echo n; echo n; echo n) | bash utils/toolchain/build_riscv_toolchain.sh && rm -rf /tmp/_riscv_build 
-## #(echo y; echo /home/espuser/riscv32imc; echo 2; echo n) | bash utils/toolchain/build_riscv32imc_toolchain.sh && rm -rf /tmp/_riscv32imc_build
 
 # copy over bashrc script
 COPY bashrc /home/espuser/.bashrc
 
-# copy over tmux.conf script
+# copy over useful config files for tmux, emacs, vim
 COPY tmux.conf /home/espuser/.tmux.conf
-
-# copy over emacs script
 COPY emacs /home/espuser/.emacs
-
+COPY vimrc /home/espuser/.vimrc
 
 
 USER root
@@ -77,8 +68,7 @@ COPY esp_env_cad.sh /home/espuser
 # copy over bashrc script
 COPY bashrc /root/.bashrc
 
-# copy over tmux.conf script
+# copy over useful config files for tmux, emacs, vim
 COPY tmux.conf /root/.tmux.conf
-
-# copy over emacs script
 COPY emacs /root/.emacs
+COPY vimrc /root/.vimrc
