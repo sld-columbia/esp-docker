@@ -43,7 +43,15 @@ USER espuser
 WORKDIR /home/espuser
  
 # clone ESP repository and install software toolchains
-RUN git clone --recursive https://github.com/sld-columbia/esp.git
+RUN git clone https://github.com/sld-columbia/esp.git && cd esp && \
+        git submodule update --init --recursive \
+        accelerators/stratus_hls/common/inc \
+        accelerators/chisel/hw rtl/caches/esp-caches rtl/cores/ariane/ariane \
+        soft/ariane/riscv-pk soft/ariane/riscv-tests \
+        accelerators/third-party/NV_NVDLA/ip \
+        accelerators/third-party/NV_NVDLA/sw && \
+        cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && \
+        rm -rf ip/verif sw/prebuilt sw/regression
 
 # copy over bashrc script
 COPY bashrc /home/espuser/.bashrc
@@ -53,6 +61,8 @@ COPY tmux.conf /home/espuser/.tmux.conf
 COPY emacs /home/espuser/.emacs
 COPY vimrc /home/espuser/.vimrc
 
+ENV PATH="/opt/riscv/bin:$PATH"
+ENV RISCV="/opt/riscv"
 
 USER root
 
