@@ -18,7 +18,7 @@ libgdbm-dev libsm-dev libxcursor-dev libxft-dev libxrandr-dev \
 libxss-dev libmpc-dev libnspr4 libnspr4-dev tk tk-dev flex rename \
 zlib1g gcc-multilib device-tree-compiler bison xvfb \
 gawk socat minicom tmux sudo cpio rsync net-tools \
-git wget bzip2 unzip file patch bc x11-apps \
+git tig wget bzip2 unzip file patch bc x11-apps tig \
 texinfo help2man emacs vim
  
 # For older GUIs (e.g. Stratus)
