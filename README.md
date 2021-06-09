@@ -8,7 +8,7 @@ The images are available [here](https://hub.docker.com/repository/docker/davideg
 
 See the [instructions on the ESP website](https://www.esp.cs.columbia.edu/docs/setup/setup-guide/#docker).
 
-## How to creating the ESP Docker images
+## How to create the ESP Docker images
 
 ### CentOS 7
 
