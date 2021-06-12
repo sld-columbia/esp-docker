@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 WORKDIR /home
 
  
-RUN apt-get update -y
+RUN apt-get update -y && apt-get install -y apt-transport-https
 RUN apt-get install -y tzdata
 RUN apt-get install -y build-essential
 
@@ -17,8 +17,8 @@ libreadline-dev libxpm-dev libmotif-dev libncurses5 libncurses-dev \
 libgdbm-dev libsm-dev libxcursor-dev libxft-dev libxrandr-dev \
 libxss-dev libmpc-dev libnspr4 libnspr4-dev tk tk-dev flex rename \
 zlib1g gcc-multilib device-tree-compiler bison xvfb \
-gawk socat minicom tmux sudo cpio rsync net-tools \
-git tig wget bzip2 unzip file patch bc x11-apps \
+cmake gawk socat minicom tmux sudo cpio rsync net-tools \
+git tig wget bzip2 unzip file patch bc x11-apps tig \
 texinfo help2man emacs vim
  
 # For older GUIs (e.g. Stratus)
@@ -62,6 +62,7 @@ COPY tmux.conf /home/espuser/.tmux.conf
 COPY emacs /home/espuser/.emacs
 COPY vimrc /home/espuser/.vimrc
 
+ENV HOST=$(hostname)
 
 USER root
 
