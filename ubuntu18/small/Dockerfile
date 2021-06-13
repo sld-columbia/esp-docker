@@ -38,9 +38,14 @@ RUN usermod -aG sudo espuser
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN echo 'espuser:espuser' | chpasswd
 
+# enable X11 forwarding
+RUN sed -i 's/#   ForwardX11 no/ForwardX11 yes/g' /etc/ssh/ssh_config
+
+
 # switch to non-root user
 USER espuser
 WORKDIR /home/espuser
+ENV HOST=$(hostname)
  
 # clone ESP repository and install software toolchains
 #RUN git clone https://github.com/sld-columbia/esp.git && \
@@ -55,23 +60,9 @@ COPY tmux.conf /home/espuser/.tmux.conf
 COPY emacs /home/espuser/.emacs
 COPY vimrc /home/espuser/.vimrc
 
-ENV HOST=$(hostname)
-
-USER root
-
-# enable X11 forwarding
-RUN sed -i 's/#   ForwardX11 no/ForwardX11 yes/g' /etc/ssh/ssh_config
-
 # copy over environment setup script (without CAD tools)
 COPY esp_env.sh /home/espuser
 
 # copy over environment setup script (with CAD tools)
 COPY esp_env_cad.sh /home/espuser
 
-# copy over bashrc script
-COPY bashrc /root/.bashrc
-
-# copy over useful config files for tmux, emacs, vim
-COPY tmux.conf /root/.tmux.conf
-COPY emacs /root/.emacs
-COPY vimrc /root/.vimrc
