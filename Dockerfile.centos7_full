@@ -43,16 +43,16 @@ USER root
 RUN sed -i 's/#   ForwardX11 no/ForwardX11 yes/g' /etc/ssh/ssh_config
 
 # copy over environment setup script (without CAD tools)
-COPY esp_env.sh /home/espuser
+COPY ./configs/esp_env.sh /home/espuser
 
 # copy over environment setup script (with CAD tools)
-COPY esp_env_cad.sh /home/espuser
+COPY ./configs/esp_env_cad.sh /home/espuser
 
 # copy over bashrc script
-COPY bashrc /root/.bashrc
+COPY ./configs/bashrc /root/.bashrc
 
 # copy over tmux.conf script
-COPY tmux.conf /root/.tmux.conf
+COPY ./configs/tmux.conf /root/.tmux.conf
 
 # copy over emacs script
-COPY emacs /root/.emacs
+COPY ./configs/emacs /root/.emacs

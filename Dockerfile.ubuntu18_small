@@ -53,16 +53,16 @@ ENV HOST=$(hostname)
     #    git submodule update --init --recursive
 
 # copy over bashrc script
-COPY bashrc /home/espuser/.bashrc
+COPY ./configs/bashrc /home/espuser/.bashrc
 
 # copy over useful config files for tmux, emacs, vim
-COPY tmux.conf /home/espuser/.tmux.conf
-COPY emacs /home/espuser/.emacs
-COPY vimrc /home/espuser/.vimrc
+COPY ./configs/tmux.conf /home/espuser/.tmux.conf
+COPY ./configs/emacs /home/espuser/.emacs
+COPY ./configs/vimrc /home/espuser/.vimrc
 
 # copy over environment setup script (without CAD tools)
-COPY esp_env.sh /home/espuser
+COPY ./configs/esp_env.sh /home/espuser
 
 # copy over environment setup script (with CAD tools)
-COPY esp_env_cad.sh /home/espuser
+COPY ./configs/esp_env_cad.sh /home/espuser
 
