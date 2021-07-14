@@ -115,7 +115,7 @@ inside the Docker container:
 tab. Make sure that the check box "Allow connections from network clients" is
 enabled, as shown in the picture below.
 
-![](/images/xquartz_preferences.png "XQuartz Security Settings")
+![](./images/xquartz_preferences.png "XQuartz Security Settings")
 
 * From the same drop-down menu, quit XQuartz. The application must
 exit completely, then you should restart XQuartz.
