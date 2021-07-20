@@ -1,46 +1,45 @@
 # Docker
 
 The ESP Docker images are available on Dockerhub:
-[hub.docker.com/repository/docker/davidegiri/esp](https://hub.docker.com/repository/docker/davidegiri/esp).
+[hub.docker.com/repository/docker/columbiasld/esp](https://hub.docker.com/repository/docker/columbiasld/esp).
 
 The repository containing the Dockerfiles for generating the ESP
 Docker images is available on Github:
-[https://github.com/sld-columbia/esp-docker](https://github.com/sld-columbia/esp-docker).
+[github.com/sld-columbia/esp-docker](https://github.com/sld-columbia/esp-docker).
 
-The ESP Docker images are based on a CentOS 7 Docker image and they contain:
+The ESP Docker images based on a CentOS 7 Docker image contain:
 
-* the installation of all the [software packets](#software-packets)
+* the installation of all the [software packets](https://esp.cs.columbia.edu/docs/setup/setup-guide/#software-packets)
   required by ESP;
 
 * the installation of utilities like vim, emacs, tmux, socat and
   minicom, useful when working with ESP;
 
-* an [environment variables](#environment-variables) setup script to
+* an [environment variables](https://esp.cs.columbia.edu/docs/setup/setup-guide/#environment-variables) setup script to
   be customized with the correct CAD tools paths and licenses;
 
-* the [ESP repository](#esp-repository) and all its submodules;
+* the [ESP repository](https://esp.cs.columbia.edu/docs/setup/setup-guide/#esp-repository) and all its submodules;
 
-* the installation of the [software toolchains](#software-toolchain)
+* the installation of the [software toolchains](https://esp.cs.columbia.edu/docs/setup/setup-guide/#software-toolchain)
   for RISC-V and Leon3.
 
-The are two types of images, which are identified by the `full` and
-`small` strings in the tag. The complete images are labeled with
-`full` and they are over 5GB in size in the compressed format. We also
+There are two types of images, which are identified by the `centos7-full` and
+`centos7-small` strings in the tag. The complete images are labeled with
+`centos7-full` and they are over 5GB in size in the compressed format. We also
 offer smaller images labeled with the `small` string that are slightly
 above 1GB in size, because they do not include the installation of the
-RISC-V and Leon3 [software toolchains](#software-toolchain).
+RISC-V and Leon3 [software toolchains](https://esp.cs.columbia.edu/docs/setup/setup-guide/#software-toolchain).
 
 We have tested the ESP Docker images on Windows 10, MacOS 10.15,
 CentOS 7, Ubuntu 18.04 and RedHat 7.8. However, they should work on
 other OS distributions as well.
 
-[Back to top](#)
 
 ## Install Docker
 
 If you haven't already, install Docker by following the instructions
 for your OS:
-[https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/).
+[docs.docker.com/engine/install](https://docs.docker.com/engine/install/).
 
 To start the Docker daemon on Linux systems you need to run:
 
@@ -71,7 +70,7 @@ Download the Docker image by running the following command (on Windows
 small image.
 
 ```bash
-docker pull davidegiri/esp:<tag>
+docker pull columbiasld/esp:<tag>
 ```
 <br>
 
@@ -84,7 +83,6 @@ docker login -u <your-dockerhub-username>
 ```
 <br>
 
-[Back to top](#)
 
 ## Start the Docker container
 
@@ -98,9 +96,8 @@ container. Replace `<tag>` with `centos7-full` for the full image and
 with `centos7-small` for the small image.
 
 ```bash
-docker run -it --security-opt label=type:container_runtime_t --network=host -e DISPLAY=$DISPLAY -v "$HOME/.Xauthority:/root/.Xauthority:rw" davidegiri/esp:<tag> /bin/bash
+docker run -it --user espuser --security-opt label=type:container_runtime_t --network=host -e DISPLAY=$DISPLAY -v "$HOME/.Xauthority:/root/.Xauthority:rw" -v "/opt:/opt" columbiasld/esp:<tag> /bin/bash
 ```
-
 ### MacOS
 
 On MacOS you need to make sure that the X server is running and is
@@ -132,7 +129,7 @@ Finally, you can run the container as follows. Replace `<tag>` with
 small image.
 
 ```bash
-docker run -it --network=host -e DISPLAY=$ip:0 -v /tmp/.X11-unix:/tmp/.X11-unix davidegiri/esp:<tag> /bin/bash
+docker run -it --network=host -e DISPLAY=$ip:0 -v /tmp/.X11-unix:/tmp/.X11-unix columbiasld/esp:<tag> /bin/bash
 ```
 
 ### Windows 10
@@ -169,7 +166,8 @@ running `xeyes` or `xclock`.
 
 ## CAD tools with Docker
 
-The [CAD tools](#cad-tools) section has the complete list of CAD tools
+The [CAD tools](https://esp.cs.columbia.edu/docs/setup/setup-guide/#cad-tools) 
+section has the complete list of CAD tools
 required by ESP. The Docker image doesn't contain any of those CAD
 tools. Hence, next we describe a few options to work with CAD tools in
 the Docker container.
@@ -230,7 +228,6 @@ tools directly inside the container, without defining any volumes or
 bind mounts. The issue with this solution is that the container size
 will increase considerably, making it less portable.
 
-[Back to top](#)
 
 ## Environment variables with Docker
 
