@@ -15,46 +15,52 @@ libXft.i686 libXrandr libXrandr.i686 libXScrnSaver libXScrnSaver.i686 \
 libmpc-devel libmpc-devel.i686 nspr nspr.i686 nspr-devel nspr-devel.i686 \
 tk tk-devel Xvfb dtc bison flex socat minicom tmux \
 git wget bzip2 which gcc gcc-c++ unzip file patch bc \
-texinfo texinfo-tex help2man emacs vim xorg-x11-apps java
+texinfo texinfo-tex help2man emacs vim xorg-x11-apps java sudo \
+net-tools diffstat chrpath autoconf libtool automake glib2-devel
+
 RUN ln -s /lib64/libtiff.so.5 /lib64/libtiff.so.3 && \
 ln -s /usr/lib64/libmpc.so.3 /usr/lib64/libmpc.so.2
 
 # install Pmw module
 RUN pip3 install Pmw
 
-# create non-root user
-RUN useradd -ms /bin/bash espuser
-# switch to non-root user
+# create a non-root user with sudo privilege (password:espuser)
+RUN useradd -ms /bin/bash espuser && usermod -aG wheel espuser
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN echo 'espuser:espuser' | chpasswd
+
+# switch to the non-root user
 USER espuser
 WORKDIR /home/espuser
 
 # clone ESP repository and install software toolchains
 RUN git clone https://github.com/sld-columbia/esp.git && cd esp && \
-git submodule update --init --recursive \
-accelerators/stratus_hls/common/inc \
-accelerators/chisel/hw rtl/caches/esp-caches rtl/cores/ariane/ariane \
-soft/ariane/riscv-pk soft/ariane/riscv-tests \
-accelerators/third-party/NV_NVDLA/ip \
-accelerators/third-party/NV_NVDLA/sw && \
-cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && \
-rm -rf ip/verif sw/prebuilt sw/regression
+	git submodule update --init --recursive \
+	accelerators/stratus_hls/common/inc \
+	accelerators/chisel/hw rtl/caches/esp-caches rtl/cores/ariane/ariane \
+	soft/ariane/riscv-pk soft/ariane/riscv-tests \
+	accelerators/third-party/NV_NVDLA/ip \
+	accelerators/third-party/NV_NVDLA/sw && \
+	cd /home/espuser/esp/accelerators/third-party/NV_NVDLA && \
+	rm -rf ip/verif sw/prebuilt sw/regression
 
-USER root
+
+# copy over some useful environment setup scripts
+COPY ./configs/esp_env.sh /home/espuser
+COPY ./configs/esp_env_cad.sh /home/espuser
+COPY ./configs/bashrc /home/espuser/.bashrc
+COPY ./configs/tmux.conf /home/espuser/.tmux.conf
+COPY ./configs/emacs /home/espuser/.emacs
+COPY ./configs/vimrc /home/espuser/.vimrc
 
 # enable X11 forwarding
+USER root
 RUN sed -i 's/#   ForwardX11 no/ForwardX11 yes/g' /etc/ssh/ssh_config
 
-# copy over environment setup script (without CAD tools)
-COPY ./configs/esp_env.sh /home/espuser
-
-# copy over environment setup script (with CAD tools)
-COPY ./configs/esp_env_cad.sh /home/espuser
-
-# copy over bashrc script
+# copy over some useful environment setup scripts
+COPY ./configs/esp_env.sh /root
+COPY ./configs/esp_env_cad.sh /root
 COPY ./configs/bashrc /root/.bashrc
-
-# copy over tmux.conf script
 COPY ./configs/tmux.conf /root/.tmux.conf
-
-# copy over emacs script
 COPY ./configs/emacs /root/.emacs
+COPY ./configs/vimrc /root/.vimrc
