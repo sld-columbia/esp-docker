@@ -32,7 +32,9 @@
 
 # RISC-V toolchain
 export RISCV=/home/espuser/riscv
-export PATH=$PATH:/home/espuser/riscv/bin
+export PATH=$PATH:$RISCV/bin
+export RISCV32IMC=/home/espuser/riscv32imc
+export PATH=$PATH:$RISCV32IMC/bin
 
 # LEON3 toolchain
 export PATH=$PATH:/home/espuser/leon/bin
